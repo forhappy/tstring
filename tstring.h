@@ -15,59 +15,35 @@
  *
  * =============================================================================
  */
-#ifndef _TSTRING_H
-#define _TSTRING_H
+#ifndef _TSTRING_H_
+#define _TSTRING_H_
+
+#include <ctype.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
 
-
-#undef __BEGIN_DECLS
-#undef __END_DECLS
-
 #ifdef __cplusplus
-# define __BEGIN_DECLS extern "C" {
-# define __END_DECLS }
-#else
-# define __BEGIN_DECLS /* empty */
-# define __END_DECLS /* empty */
+extern "C" {
 #endif
 
-#ifdef HAVE_STDBOOL_H
-#include <stdbool.h>
-#endif
+#define min(x, y) ({\
+		__typeof(x) _min1 = (x);\
+		__typeof(y) _min2 = (y);\
+		(void) (&_min1 == &_min2);\
+		_min1 < _min2 ? _min1 : _min2;})
 
-__BEGIN_DECLS
-#ifdef HAVE_STDBOOL_H
-typedef	bool bool_t;
-# define TRUE true
-# define FALSE false
-#else
-typedef int bool_t;
-# define TRUE	(1)
-# define FALSE	(!TRUE)
-#endif
-
-
-#define min(x, y) ({						\
-			typeof(x) _min1 = (x);			\
-			typeof(y) _min2 = (y);			\
-			(void) (&_min1 == &_min2);		\
-			_min1 < _min2 ? _min1 : _min2; })
-
-#define max(x, y) ({						\
-			typeof(x) _max1 = (x);			\
-			typeof(y) _max2 = (y);			\
-			(void) (&_max1 == &_max2);		\
-			_max1 > _max2 ? _max1 : _max2; })
+#define max(x, y) ({\
+		__typeof(x) _max1 = (x);\
+		__typeof(y) _max2 = (y);\
+		(void) (&_max1 == &_max2);\
+		_max1 > _max2 ? _max1 : _max2;})
 
 typedef struct _tstring_t tstring_t;
+
 struct _tstring_t {
     char *str;
     unsigned int len;
@@ -118,7 +94,7 @@ tstring_append_c_inline(tstring_t *str, char c)
     tstring_insert_c(str, -1, c);
   return str;
 }
-#define tstring_append_c(str,c)     tstring_append_c_inline(str, c)
+#define tstring_append_c_optimized(str,c)     tstring_append_c_inline(str, c)
 
 static inline uint32_t tstring_size(const tstring_t *str)
 {
@@ -134,6 +110,8 @@ static inline char * tstring_data(const tstring_t *str)
     return str->str;
 }
 
-__END_DECLS
-
+#ifdef __cplusplus
+}
 #endif
+
+#endif // _TSTRING_H_

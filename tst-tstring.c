@@ -25,27 +25,29 @@ int main(int argc, const char *argv[])
     tstr1 = tstring_new("hello world");
     tstr2 = tstring_new("");
 
-    printf("%s\n", tstr1->str);
+    printf("tstr1: %s\n", tstring_data(tstr1));
     tstr1 = tstring_assign(tstr1, "hello world tstr1 after reassignment.");
-    printf("%s\n", tstr1->str);
+    tstr1 = tstring_prepend(tstr1, "i'm precedence.");
+    tstr1 = tstring_prepend_c(tstr1, 'O');
+    printf("tstr1: %s\n", tstring_data(tstr1));
 
     tstr2 = tstring_assign(tstr2, "hello world tstr2.");
-    printf("%s\n", tstr2->str);
+    printf("tstr2: %s\n", tstring_data(tstr2));
 
     tstring_t *tstr3 = NULL;
     tstr3 = tstring_new_len("hello world\0hello world", 23);
 
-    printf("%s\n", tstr3->str);
+    printf("tstr3 size: %d\n", tstring_size(tstr3));
 
   
     tstring_t *tstr4 = tstring_new("hello world");
  
-    printf("%d\n", tstring_equal(tstr1, tstr4));
+    printf("tstr1 equals to tstr4 ?: %d\n", tstring_equal(tstr1, tstr4));
     tstring_prepend(tstr4, "hi但是");
     tstring_insert(tstr4, 1, "willlllllllllllllll");
-    tstring_insert_unichar(tstr4, 12, "嗨");
-    printf("%s\n", tstr4->str);
+    printf("%s\n", tstring_data(tstr4));
     tstring_free(tstr1);
     tstring_free(tstr2);
     tstring_free(tstr3);
+	tstring_free(tstr4);
 }
