@@ -173,7 +173,7 @@ tstring_free(tstring_t *str)
 {
     if (str != NULL) {
         if (str->str != NULL) {
-            free (str->str);
+            free(str->str);
             str->str = NULL;
         }
         free(str);
@@ -195,8 +195,8 @@ int
 tstring_equal(const tstring_t *v, const tstring_t *v2)
 {
     char *p, *q;
-    tstring_t *str1 = (tstring_t *) v;
-    tstring_t *str2 = (tstring_t *) v2;
+    tstring_t *str1 = (tstring_t *)v;
+    tstring_t *str2 = (tstring_t *)v2;
     unsigned int i = str1->len;
     
     if (i != str2->len)
@@ -333,7 +333,7 @@ tstring_insert_len(tstring_t *str, int32_t pos, const char *val, int32_t len)
     if (len == 0)
         return str;
     if (len < 0)
-        len = strlen (val);
+        len = strlen(val);
     if (pos < 0)
         pos = str->len;
     else
@@ -708,7 +708,7 @@ tstring_overwrite_len(tstring_t *str, int32_t pos, const char *val, int32_t len)
     assert(val != NULL);
     assert(pos <= str->len);
     if (len < 0)
-        len = strlen (val);
+        len = strlen(val);
     end = pos + len;
     if (end > str->len)
         _tstring_maybe_expand(str, end - str->len);
